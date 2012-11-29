@@ -1,0 +1,17 @@
+Our Goal
+
+Build a real-time app displaying recently tweeted about foods that clicks through to foursquare and/or yelp.
+
+Steps
+
+1. Connect to twitter to get a live stream of tweets related to food.
+
+2. Push new tweets through to users in real time.
+
+3. Build a word cloud with words linking to yelp/foursquare.
+
+Bonus
+
+1. Make it sexy (just a little bit).
+
+2. Save words in mongo and show a graph of popular foods over time.
