@@ -1,0 +1,20 @@
+{
+  "author": "Anuj Gupta",
+  "name": "anuj_pairprogramming",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/timisbusy/anuj_pairprogramming.git"
+  },
+  "main": "server.js",
+  "engines": {
+    "node": "~0.6.9"
+  },
+  "dependencies": {
+    "ntwitter": "0.5.0",
+    "express": "3.0.3",
+    "socket.io": "0.9.11"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
