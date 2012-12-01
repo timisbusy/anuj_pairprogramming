@@ -1,55 +1,24 @@
+<!DOCTYPE html>
 <html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io.connect('http://localhost:3000');
-  var wordMap = {}
-  var totalOccur = 0;
-  function getSize(wordMap, word)
-  {
-    var count = wordMap[word];
-    var size = 10.0 + 80.0 * count / totalOccur;
-    return size;
-  }
-  function resizeAll(wordMap)
-  {
-    for (var k in wordMap)
-    {
-      var idTag = '#' + k;
-      $(idTag).css({'font-size': getSize(wordMap, k)});
-    }
-  }
-  socket.on('twitter', function (data) {
-    console.log(data);
-    var words = data.words;
-    for(var i = 0; i < words.length; ++i)
-    {
-      totalOccur += 1;
-      var idTag = '#' + words[i];
-      console.log(idTag);
-      if(wordMap[words[i]] == undefined)
-      {
-        $('#wordCloud').append("<span style='padding: 10px' id='" + words[i]  + "'>" + words[i] + '</span>');
-        wordMap[words[i]] = 1;
-      }
-      else
-      {
-        wordMap[words[i]] += 1;
-      }
-      resizeAll(wordMap);
-      //$(idTag).css({'font-size': getSize(wordMap, words[i])});
-      //var size = 10 + (90-10) * ()
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+      <div class="hero-unit" style='display: block; overflow: auto; padding: 20px'>
+        <div id="wordCloud" style='display: block; overflow: auto; padding: 20px; text-align: center'>
+        </div>
+      </div>
+      <div class="row" id="tweets">
+      </div>
+    </div>
 
-    }
-    $('#tweets').prepend('<div>' + data.tweet + '</div>');
-  });
-</script>
-</head>
-<body>
-  <div id="wordCloud"></div>
-  <br/>
-  <br/>
-  <div id="tweets"></div>
-</body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/streamTwitter.js" ></script>
+  </body>
 </html>

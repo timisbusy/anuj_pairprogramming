@@ -1,7 +1,12 @@
 var twitter = require('ntwitter')
-var app = require('express')()
+var express = require('express')
+  , app = express()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server);
+
+app.use("/css", express.static(__dirname + '/css'));
+app.use("/js", express.static(__dirname + '/js'));
+app.use("/img", express.static(__dirname + '/img'));
 
 server.listen(3000);
 
@@ -42,6 +47,8 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 
+
+
 var wordCloudList = 
   [
     'pizza', 'coffee', 'cheetos', 'chicken wing', 'quasedia',
@@ -66,23 +73,17 @@ function getMatchedWords(text)
   return retList;
 }
 
-
-var testString = 'i like fries and pizza';
-/*
-var regString = "fries";
-var newRegex = new RegExp(regString, 'i');
-console.log(newRegex);
-console.log(testString.match(newRegex));
-*/
-//console.log(getMatchedWords(testString));
-//console.log(getMatchedWords(testString));
-
 io.sockets.on('connection', function (socket) {
   
   twit.stream('statuses/filter', {'track':wordL}, function(stream) {
     stream.on('data', function (data) {
       var matchedWords = getMatchedWords(data.text);
-      socket.emit('twitter', { tweet: data.text, words: matchedWords});
+      try
+      {
+      socket.emit('twitter', { tweet: data.text, words: matchedWords, 
+                               user: data.user.name, id: data.id_str});
+      }
+      catch(e){}
     });
   });
 
